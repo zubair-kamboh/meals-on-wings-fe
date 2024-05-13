@@ -12,7 +12,13 @@ export const Header = ()=>{
          
             <div  className='d-flex justify-content-center logo-txt'>Meals & Wings</div>
             </div>
-            <div className='mt-3'><div className='logo-img-style pt-1 pb-2 ps-2 pe-2'><BsCart4 /></div></div>
+            <div className='mt-3'><div className='logo-img-style pt-1 pb-2 ps-2 pe-2 position-relative'><BsCart4 />
+            
+            
+            <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+    5
+  </span>
+            </div></div>
         </div>
     )
 }
