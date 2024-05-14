@@ -72,8 +72,17 @@ CREATE TABLE `order_details` (
   `trcn_id` int DEFAULT NULL,
   `odr_price` decimal(10,2) DEFAULT NULL,
   `odr_date` datetime DEFAULT NULL,
+  `odr_status` varcher(50),
   PRIMARY KEY (`odr_id`),
   KEY `cust_id_idx` (`cust_id`),
   KEY `rest_id_idx` (`rest_id`),
   CONSTRAINT `fk_cust_id` FOREIGN KEY (`cust_id`) REFERENCES `customer_details` (`cust_id`),
   CONSTRAINT `fk_rest_id` FOREIGN KEY (`rest_id`) REFERENCES `restaurant_details` (`rest_id`));
+
+CREATE TABLE `order_items` (
+  `itm_Id` int NOT NULL,
+  `odr_id` int NOT NULL,
+  `fd_id`  int NOT NULL,
+  `fd_price` decimal(10,2) ,
+  `fd_weight` DECIMAL(4,2) NOT NULL;
+)

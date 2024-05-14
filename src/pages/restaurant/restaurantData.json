@@ -1,0 +1,197 @@
+{
+    "restaurant_details": [
+      {
+        "rest_name": "McDonald's",
+        "rest_loc": "123 Bourke St, Melbourne",
+        "rest_email": "mcdonalds@example.com",
+        "rest_password": "password123"
+      },
+      {
+        "rest_name": "KFC",
+        "rest_loc": "456 Swanston St, Melbourne",
+        "rest_email": "kfc@example.com",
+        "rest_password": "kfc123"
+      },
+      {
+        "rest_name": "Subway",
+        "rest_loc": "789 Collins St, Melbourne",
+        "rest_email": "subway@example.com",
+        "rest_password": "subway456"
+      },
+      {
+        "rest_name": "Hungry Jack's",
+        "rest_loc": "101 Flinders Ln, Melbourne",
+        "rest_email": "hungryjacks@example.com",
+        "rest_password": "hungry123"
+      },
+      {
+        "rest_name": "Domino's Pizza",
+        "rest_loc": "222 Elizabeth St, Melbourne",
+        "rest_email": "dominos@example.com",
+        "rest_password": "dominos789"
+      }
+    ],
+    "restaurant_menu": [
+      {
+        "rest_id": 1,
+        "menu_items": [
+          {
+            "fd_id": 1,
+            "fd_name": "Big Mac",
+            "fd_image": "big_mac.jpg",
+            "fd_price": 5.99,
+            "fd_weight": 250.00,
+            "fd_desc": "Classic burger with two beef patties",
+            "fd_status": "available"
+          },
+          {
+            "fd_id": 2,
+            "fd_name": "McChicken",
+            "fd_image": "mcchicken.jpg",
+            "fd_price": 4.50,
+            "fd_weight": 180.00,
+            "fd_desc": "Crispy chicken burger with lettuce",
+            "fd_status": "available"
+          },
+          {
+            "fd_id": 3,
+            "fd_name": "French Fries (Large)",
+            "fd_image": "fries_large.jpg",
+            "fd_price": 3.00,
+            "fd_weight": 300.00,
+            "fd_desc": "Large portion of golden fries",
+            "fd_status": "available"
+          }
+        ]
+      },
+      {
+        "rest_id": 2,
+        "menu_items": [
+          {
+            "fd_id": 1,
+            "fd_name": "Original Recipe Chicken",
+            "fd_image": "original_chicken.jpg",
+            "fd_price": 8.99,
+            "fd_weight": 300.00,
+            "fd_desc": "Signature KFC fried chicken",
+            "fd_status": "available"
+          },
+          {
+            "fd_id": 2,
+            "fd_name": "Twister Wrap",
+            "fd_image": "twister_wrap.jpg",
+            "fd_price": 6.50,
+            "fd_weight": 220.00,
+            "fd_desc": "Grilled or crispy chicken wrap",
+            "fd_status": "available"
+          },
+          {
+            "fd_id": 3,
+            "fd_name": "Popcorn Chicken (Medium)",
+            "fd_image": "popcorn_chicken_medium.jpg",
+            "fd_price": 4.00,
+            "fd_weight": 150.00,
+            "fd_desc": "Crunchy bite-sized chicken pieces",
+            "fd_status": "available"
+          }
+        ]
+      },
+      {
+        "rest_id": 3,
+        "menu_items": [
+          {
+            "fd_id": 1,
+            "fd_name": "Italian B.M.T. Sandwich",
+            "fd_image": "bmt_sandwich.jpg",
+            "fd_price": 7.99,
+            "fd_weight": 400.00,
+            "fd_desc": "Sub filled with spicy Italian meats",
+            "fd_status": "available"
+          },
+          {
+            "fd_id": 2,
+            "fd_name": "Roast Beef Salad",
+            "fd_image": "roast_beef_salad.jpg",
+            "fd_price": 6.00,
+            "fd_weight": 350.00,
+            "fd_desc": "Fresh salad with roast beef slices",
+            "fd_status": "available"
+          },
+          {
+            "fd_id": 3,
+            "fd_name": "Cookies (Small)",
+            "fd_image": "cookies_small.jpg",
+            "fd_price": 2.50,
+            "fd_weight": 100.00,
+            "fd_desc": "Chocolate chip cookies",
+            "fd_status": "available"
+          }
+        ]
+      },
+      {
+        "rest_id": 4,
+        "menu_items": [
+          {
+            "fd_id": 1,
+            "fd_name": "Whopper",
+            "fd_image": "whopper.jpg",
+            "fd_price": 6.99,
+            "fd_weight": 350.00,
+            "fd_desc": "Flame-grilled beef burger",
+            "fd_status": "available"
+          },
+          {
+            "fd_id": 2,
+            "fd_name": "Chicken Royale",
+            "fd_image": "chicken_royale.jpg",
+            "fd_price": 5.50,
+            "fd_weight": 200.00,
+            "fd_desc": "Crispy chicken burger",
+            "fd_status": "available"
+          },
+          {
+            "fd_id": 3,
+            "fd_name": "Onion Rings (Large)",
+            "fd_image": "onion_rings_large.jpg",
+            "fd_price": 4.00,
+            "fd_weight": 400.00,
+            "fd_desc": "Golden fried onion rings",
+            "fd_status": "available"
+          }
+        ]
+      },
+      {
+        "rest_id": 5,
+        "menu_items": [
+          {
+            "fd_id": 1,
+            "fd_name": "Pepperoni Pizza (Large)",
+            "fd_image": "pepperoni_pizza_large.jpg",
+            "fd_price": 12.99,
+            "fd_weight": 1000.00,
+            "fd_desc": "Classic pizza with pepperoni topping",
+            "fd_status": "available"
+          },
+          {
+            "fd_id": 2,
+            "fd_name": "Garlic Bread",
+            "fd_image": "garlic_bread.jpg",
+            "fd_price": 4.99,
+            "fd_weight": 200.00,
+            "fd_desc": "Buttery garlic breadsticks",
+            "fd_status": "available"
+          },
+          {
+            "fd_id": 3,
+            "fd_name": "Chocolate Lava Cake",
+            "fd_image": "chocolate_lava_cake.jpg",
+            "fd_price": 3.99,
+            "fd_weight": 150.00,
+            "fd_desc": "Warm chocolate cake with gooey center",
+            "fd_status": "available"
+          }
+        ]
+      }
+    ]
+  }
+  
