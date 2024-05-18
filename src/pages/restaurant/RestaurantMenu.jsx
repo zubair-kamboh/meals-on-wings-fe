@@ -1,58 +1,87 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './RestaurantStyle.css';
-import menuData from './restaurantData.json';
 import { firestore } from './../../firebase';
-import { collection, onSnapshot, query, where, orderBy } from 'firebase/firestore';
+import { collection, onSnapshot, query, orderBy, doc, updateDoc, deleteDoc } from 'firebase/firestore';
 
 export const RestaurantMenu = () => {
-  const rest_id = 1;
-  const [menuItems, setMenuItems] = useState([]);
-  const [editItem, setEditItem] = useState(null); // State to hold item being edited
+  const rest_id = 1;  // Restaurant ID hard-coded, needs to change on login
+  const [menuItems, setMenuItems] = useState([]);  // State to hold menu items
+  const [editItem, setEditItem] = useState(null);  // State to hold the item being edited
 
+  // Fetch menu items from Firestore on component mount
   useEffect(() => {
-
     const queryRef = query(
-      collection(firestore,
-        `restaurant_details/${rest_id}`,
-        'menu_items'
-      ),
+      collection(firestore, `restaurant_details/${rest_id}/menu_items`),
       orderBy('fd_price', 'asc')
     );
-    onSnapshot(queryRef, {
+
+    // Subscribe to Firestore changes
+    const unsubscribe = onSnapshot(queryRef, {
       next: (response) => {
         const menuItems = response.docs.map(e => ({ menuItemId: e.id, ...e.data() }));
-        setMenuItems(menuItems);
+        setMenuItems(menuItems);  // Update state with fetched menu items
       },
       error: (error) => {
-        console.log(error);
+        console.log(error);  // Log any errors
       }
     });
+
+    // Cleanup subscription on component unmount
+    return () => unsubscribe();
   }, [rest_id]);
 
-  const handleStatusUpdate = (itemId, newStatus) => {
-    const updatedMenuItems = menuItems.map((item) =>
-      item.fd_id === itemId ? { ...item, fd_status: newStatus } : item
-    );
-    setMenuItems(updatedMenuItems);
+  // Handle status update
+  const handleStatusUpdate = async (itemId, newStatus) => {
+    try {
+      const itemDocRef = doc(firestore, `restaurant_details/${rest_id}/menu_items`, itemId);
+      await updateDoc(itemDocRef, { fd_status: newStatus });
+
+      // Update local state
+      const updatedMenuItems = menuItems.map((item) =>
+        item.menuItemId === itemId ? { ...item, fd_status: newStatus } : item
+      );
+      setMenuItems(updatedMenuItems);
+    } catch (error) {
+      console.error('Error updating status: ', error);
+    }
   };
 
-  const handleDelete = (itemId) => {
-    const updatedMenuItems = menuItems.filter((item) => item.fd_id !== itemId);
-    setMenuItems(updatedMenuItems);
+  // Handle item deletion
+  const handleDelete = async (itemId) => {
+    try {
+      const itemDocRef = doc(firestore, `restaurant_details/${rest_id}/menu_items`, itemId);
+      await deleteDoc(itemDocRef);
+
+      // Update local state
+      const updatedMenuItems = menuItems.filter((item) => item.menuItemId !== itemId);
+      setMenuItems(updatedMenuItems);
+    } catch (error) {
+      console.error('Error deleting item: ', error);
+    }
   };
 
+  // Set the item to be edited
   const handleEdit = (itemId) => {
-    const itemToEdit = menuItems.find((item) => item.fd_id === itemId);
+    const itemToEdit = menuItems.find((item) => item.menuItemId === itemId);
     setEditItem(itemToEdit);
   };
 
-  const handleEditSave = (updatedItem) => {
-    const updatedMenuItems = menuItems.map((item) =>
-      item.fd_id === updatedItem.fd_id ? { ...item, ...updatedItem } : item
-    );
-    setMenuItems(updatedMenuItems);
-    setEditItem(null); // Clear edit state after saving
+  // Handle save of edited item
+  const handleEditSave = async (updatedItem) => {
+    try {
+      const itemDocRef = doc(firestore, `restaurant_details/${rest_id}/menu_items`, updatedItem.menuItemId);
+      await updateDoc(itemDocRef, updatedItem);
+
+      // Update local state
+      const updatedMenuItems = menuItems.map((item) =>
+        item.menuItemId === updatedItem.menuItemId ? { ...item, ...updatedItem } : item
+      );
+      setMenuItems(updatedMenuItems);
+      setEditItem(null);  // Clear edit state after saving
+    } catch (error) {
+      console.error('Error saving item: ', error);
+    }
   };
 
   return (
@@ -80,7 +109,7 @@ export const RestaurantMenu = () => {
         <tbody>
           {menuItems.map((item) => (
             <tr
-              key={item.fd_id}
+              key={item.menuItemId}
               className={item.fd_status === 'available' ? 'available-row' : 'sold-out-row'}
             >
               <td>{item.fd_id}</td>
@@ -91,24 +120,23 @@ export const RestaurantMenu = () => {
               <td>
                 <select
                   value={item.fd_status}
-                  onChange={(e) => handleStatusUpdate(item.fd_id, e.target.value)}
+                  onChange={(e) => handleStatusUpdate(item.menuItemId, e.target.value)}
                 >
                   <option value="available">Available</option>
                   <option value="sold-out">Sold Out</option>
                 </select>
               </td>
               <td>
-                <button onClick={() => handleDelete(item.fd_id)}>Delete</button>
-                <button onClick={() => handleEdit(item.fd_id)}>Edit</button>
+                <button onClick={() => handleDelete(item.menuItemId)}>Delete</button>
+                <button onClick={() => handleEdit(item.menuItemId)}>Edit</button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
 
-      {/* Edit Card Component */}
       {editItem && (
-        <EditMenuItem item={editItem} onSave={() => {}} onCancel={() => setEditItem(null)} />
+        <EditMenuItem item={editItem} onSave={handleEditSave} onCancel={() => setEditItem(null)} />
       )}
     </div>
   );
@@ -118,11 +146,13 @@ export const RestaurantMenu = () => {
 const EditMenuItem = ({ item, onSave, onCancel }) => {
   const [editedItem, setEditedItem] = useState({ ...item });
 
+  // Handle input changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setEditedItem({ ...editedItem, [name]: value });
   };
 
+  // Handle save button click
   const handleSave = () => {
     onSave(editedItem);
   };
