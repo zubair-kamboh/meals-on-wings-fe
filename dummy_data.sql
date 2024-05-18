@@ -15,7 +15,8 @@ INSERT INTO `meals_on_wings_db`.`restaurant_menu` (`rest_id`, `fd_id`, `fd_name`
 -- Dummy data for KFC
 INSERT INTO `meals_on_wings_db`.`restaurant_menu` (`rest_id`, `fd_id`, `fd_name`, `fd_image`, `fd_price`, `fd_weight`, `fd_desc`, `fd_status`) VALUES
 (2, 1, 'Original Recipe Chicken', 'original_chicken.jpg', 8.99, 300.00, 'Signature KFC fried chicken', 'available'),
-(2, 2, 'Twister Wrap', 'twister_wrap.jpg', 6.50, 220.00, 'Grilled or crispy chicken wrap', 'available'),
+(2, 2, 'Twister Wrap', 'twister_wrap.
+jpg', 6.50, 220.00, 'Grilled or crispy chicken wrap', 'available'),
 (2, 3, 'Popcorn Chicken (Medium)', 'popcorn_chicken_medium.jpg', 4.00, 150.00, 'Crunchy bite-sized chicken pieces', 'available');
 
 -- Dummy data for Subway

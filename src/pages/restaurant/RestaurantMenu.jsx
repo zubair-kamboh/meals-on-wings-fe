@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './RestaurantStyle.css';
 import menuData from './restaurantData.json';
+import { firestore } from './../../firebase';
+import { collection, onSnapshot, query, where, orderBy } from 'firebase/firestore';
 
 export const RestaurantMenu = () => {
   const rest_id = 1;
@@ -9,15 +11,23 @@ export const RestaurantMenu = () => {
   const [editItem, setEditItem] = useState(null); // State to hold item being edited
 
   useEffect(() => {
-    // Filter menu items based on rest_id
-    const filteredMenuItems = menuData.restaurant_menu.find(
-      (restaurant) => restaurant.rest_id === rest_id
+
+    const queryRef = query(
+      collection(firestore,
+        `restaurant_details/${rest_id}`,
+        'menu_items'
+      ),
+      orderBy('fd_price', 'asc')
     );
-    if (filteredMenuItems) {
-      setMenuItems(filteredMenuItems.menu_items);
-    } else {
-      setMenuItems([]); // Set empty array if no matching restaurant found
-    }
+    onSnapshot(queryRef, {
+      next: (response) => {
+        const menuItems = response.docs.map(e => ({ menuItemId: e.id, ...e.data() }));
+        setMenuItems(menuItems);
+      },
+      error: (error) => {
+        console.log(error);
+      }
+    });
   }, [rest_id]);
 
   const handleStatusUpdate = (itemId, newStatus) => {
@@ -98,7 +108,7 @@ export const RestaurantMenu = () => {
 
       {/* Edit Card Component */}
       {editItem && (
-        <EditMenuItem item={editItem} onSave={handleEditSave} onCancel={() => setEditItem(null)} />
+        <EditMenuItem item={editItem} onSave={() => {}} onCancel={() => setEditItem(null)} />
       )}
     </div>
   );
