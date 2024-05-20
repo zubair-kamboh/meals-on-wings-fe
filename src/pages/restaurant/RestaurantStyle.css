@@ -73,14 +73,15 @@ body {
   .menu-table select {
     padding: 6px;
   }
-  
+
   .menu-table button {
-    padding: 6px 10px;
+    padding: 6px;
     cursor: pointer;
     background-color: #007bff;
     color: #fff;
     border: none;
     border-radius: 4px;
+    margin: 5px 5px; /* Add space above and below the button */
   }
   
   .menu-table button:hover {

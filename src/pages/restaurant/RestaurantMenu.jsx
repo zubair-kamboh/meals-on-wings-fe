@@ -5,7 +5,7 @@ import { firestore } from './../../firebase';
 import { collection, onSnapshot, query, orderBy, doc, updateDoc, deleteDoc } from 'firebase/firestore';
 
 export const RestaurantMenu = () => {
-  const rest_id = 1;  // Restaurant ID hard-coded, needs to change on login
+  const rest_id = 2;  // Restaurant ID (assumed to be constant here)
   const [menuItems, setMenuItems] = useState([]);  // State to hold menu items
   const [editItem, setEditItem] = useState(null);  // State to hold the item being edited
 
@@ -78,7 +78,7 @@ export const RestaurantMenu = () => {
         item.menuItemId === updatedItem.menuItemId ? { ...item, ...updatedItem } : item
       );
       setMenuItems(updatedMenuItems);
-      setEditItem(null);  // Clear edit state after saving
+      setEditItem(null);
     } catch (error) {
       console.error('Error saving item: ', error);
     }
@@ -90,7 +90,7 @@ export const RestaurantMenu = () => {
       <nav>
         <ul className="menu">
           <li><Link to="/home">Home</Link></li>
-          <li><Link to="/">Order History</Link></li>
+          <li><Link to="/orders">Order History</Link></li>
           <li><Link to="/">Ongoing Orders</Link></li>
         </ul>
       </nav>
@@ -112,9 +112,9 @@ export const RestaurantMenu = () => {
               key={item.menuItemId}
               className={item.fd_status === 'available' ? 'available-row' : 'sold-out-row'}
             >
-              <td>{item.fd_id}</td>
+              <td>{item.menuItemId}</td>
               <td>{item.fd_name}</td>
-              <td>${item.fd_price.toFixed(2)}</td>
+              <td>{typeof item.fd_price === 'number' ? `$${item.fd_price.toFixed(2)}` : 'N/A'}</td>
               <td>{item.fd_weight} g</td>
               <td>{item.fd_desc}</td>
               <td>
@@ -135,6 +135,7 @@ export const RestaurantMenu = () => {
         </tbody>
       </table>
 
+      {/* Edit Card Component */}
       {editItem && (
         <EditMenuItem item={editItem} onSave={handleEditSave} onCancel={() => setEditItem(null)} />
       )}
@@ -149,7 +150,9 @@ const EditMenuItem = ({ item, onSave, onCancel }) => {
   // Handle input changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setEditedItem({ ...editedItem, [name]: value });
+    // Ensure fd_price is updated as a number
+    const updatedValue = name === 'fd_price' ? parseFloat(value) : value;
+    setEditedItem({ ...editedItem, [name]: updatedValue });
   };
 
   // Handle save button click
@@ -163,7 +166,7 @@ const EditMenuItem = ({ item, onSave, onCancel }) => {
       <label>Name:</label>
       <input type="text" name="fd_name" value={editedItem.fd_name} onChange={handleInputChange} />
       <label>Price:</label>
-      <input type="text" name="fd_price" value={editedItem.fd_price} onChange={handleInputChange} />
+      <input type="number" name="fd_price" value={editedItem.fd_price} onChange={handleInputChange} />
       <label>Weight:</label>
       <input type="text" name="fd_weight" value={editedItem.fd_weight} onChange={handleInputChange} />
       <label>Description:</label>
