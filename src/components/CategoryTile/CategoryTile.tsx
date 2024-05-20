@@ -25,7 +25,7 @@ const imageMap:any = {
 };
 
 
-export const CategoryTile = ({index}:categoryProps) => {
+export const CategoryTile = ({index,values}:categoryProps) => {
 
     const [selectedIndex,setSelectedIndex] = useState();
 

@@ -8,6 +8,7 @@ import { Menu } from './pages/menu/menu';
 import {RestaurantHome} from './pages/restaurant/RestaurantHome'
 import {RestaurantMenu} from './pages/restaurant/RestaurantMenu'
 import {OngoingOrders} from './pages/restaurant/OngoingOrders'
+import { Checkout } from './pages/checkout/checkout';
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
 
@@ -21,15 +22,26 @@ function App() {
 
           <Routes>
           <Route
-            path="/"
+            path="/menu"
             element={
               <ProtectedRoute>
                 <Menu />             
               </ProtectedRoute>
             }
           /> 
-          <Route path="/home" element={<RestaurantHome />} />
-          <Route path="/menu" element={<RestaurantMenu />} />
+
+<Route
+            path="/checkout"
+            element={
+              <ProtectedRoute>
+                <Checkout />             
+              </ProtectedRoute>
+            }
+          /> 
+
+
+          <Route path="/" element={<RestaurantHome />} />
+          {/* <Route path="/menu" element={<RestaurantMenu />} /> */}
           <Route path="/orders" element={<OngoingOrders/>}/>
             </Routes>
           </BrowserRouter>
