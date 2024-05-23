@@ -5,7 +5,7 @@ import { getDocs, collection, doc, getDoc } from 'firebase/firestore'
 import { Table } from 'react-bootstrap'
 import OrdersTable from '../../components/Restraunt/OrdersTable'
 
-const OngoingOrders = () => {
+const OrderHistory = () => {
   const [orders, setOrders] = useState([])
   const [loading, setLoading] = useState(true)
 
@@ -64,9 +64,11 @@ const OngoingOrders = () => {
 
       <div className="container">
         <OrdersTable orders={orders} status="pending" />
+        <OrdersTable orders={orders} status="pickedup" />
+        <OrdersTable orders={orders} status="delivered" />
       </div>
     </>
   )
 }
 
-export default OngoingOrders
+export default OrderHistory
