@@ -6,7 +6,7 @@ export const RestaurantHome = () => {
   console.log('RestaurantHome component is rendered')
   return (
     <div className="container">
-      <h1>Restaurant Home</h1>
+      <h1>Restaurant Homee</h1>
       <nav>
         <ul className="menu">
           <li>
