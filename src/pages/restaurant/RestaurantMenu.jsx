@@ -16,6 +16,8 @@ export const RestaurantMenu = () => {
       orderBy('fd_price', 'asc')
     );
 
+    
+
     // Subscribe to Firestore changes
     const unsubscribe = onSnapshot(queryRef, {
       next: (response) => {
@@ -30,6 +32,7 @@ export const RestaurantMenu = () => {
     // Cleanup subscription on component unmount
     return () => unsubscribe();
   }, [rest_id]);
+  // console.log(menuItems)
 
   // Handle status update
   const handleStatusUpdate = async (itemId, newStatus) => {
@@ -89,9 +92,9 @@ export const RestaurantMenu = () => {
       <h1>Restaurant Menu</h1>
       <nav>
         <ul className="menu">
-          <li><Link to="/home">Home</Link></li>
-          <li><Link to="/orders">Order History</Link></li>
-          <li><Link to="/">Ongoing Orders</Link></li>
+          <li><Link to="/reshome">Home</Link></li>
+          <li><Link to="/reshome">Order History</Link></li>
+          <li><Link to="/resorders">Ongoing Orders</Link></li>
         </ul>
       </nav>
       <table className="menu-table">

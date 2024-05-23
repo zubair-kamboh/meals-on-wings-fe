@@ -30,6 +30,7 @@ export const Checkout = ()=>{
               is_item_handed: false,
               is_item_picked: false,
               order: `/order/${orderDocRef.id}`
+              // can we pass the rest_loc and delivery address here?
             });
       
             console.log("Delivery document written with ID: ", deliveryDocRef.id);
